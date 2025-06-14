@@ -9,7 +9,7 @@ The main purpose of this simple API client is the comfortable retrieval of data 
 available metadata to find the exact data series they are looking for.
 
 ## Credits
-Credits go to **Luca Mingarelli** and his already [present Solution](https://github.com/LucaMingarelli/ecbdata.) that my personal project is based on but offers some more functionalities as well as robustness and documentation, explaining the usage.
+Credits go to **Luca Mingarelli** and his already [present Solution](https://github.com/LucaMingarelli/ecbdata) that my personal project is based on but offers some more functionalities as well as robustness and documentation, explaining the usage.
 This newer version heavily uses the [SDMX Python Client](https://sdmx1.readthedocs.io/en/latest/walkthrough.html).
 
 ## Installation - Not yet available on PyPi

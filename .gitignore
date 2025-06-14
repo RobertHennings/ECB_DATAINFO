@@ -1,5 +1,5 @@
 # Project related stuff
-config.py
+# config.py
 credentials.json
 # Python related stuff
 __pycache__

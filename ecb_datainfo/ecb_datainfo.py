@@ -5,10 +5,14 @@ import requests
 import sdmx
 import logging
 logging.basicConfig(level=logging.INFO)
-
+import config as cfg
+# from . import config as cfg
 
 # Set the static global variables
-API_ENDPOINT = "https://sdw-wsrest.ecb.europa.eu"
+API_ENDPOINT = cfg.BASE_URL
+REQUEST_TIMEOUT = cfg.REQUEST_TIMEOUT
+ERROR_CODES_DICT = cfg.ERROR_CODES_DICT
+SUCCESS_CODES_DICT = cfg.SUCCESS_CODES_DICT
 # Main purposes of the class:
 # Primary purpose: 1) Download Data for a provided series key
 # Secondary purpose: 2) Get information and search for certain properties
@@ -22,7 +26,10 @@ class ECB_DATA_INFO():
         self,
         proxies: Dict[str, str]=None,
         verify: bool=None,
-        api_endpoint: str=API_ENDPOINT
+        api_endpoint: str=API_ENDPOINT,
+        request_timeout: int=REQUEST_TIMEOUT,
+        error_codes_dict: Dict[int, Dict[str, str]]=ERROR_CODES_DICT,
+        success_codes_dict: Dict[int, Dict[str, str]]=SUCCESS_CODES_DICT,
         ):
         # Set proxies
         self.proxies = proxies
@@ -30,6 +37,11 @@ class ECB_DATA_INFO():
         self.verify = verify
         # Set the API endpoint
         self.api_endpoint = api_endpoint
+        # Set the default request timeout
+        self.request_timeout = request_timeout
+        # Set the error and success codes dictionaries for requests
+        self.error_codes_dict = error_codes_dict
+        self.success_codes_dict = success_codes_dict
         # establish connection - handling/testing is integrated
         self.__ecb_connect(proxies=proxies, verify=verify)
 
@@ -80,6 +92,45 @@ class ECB_DATA_INFO():
                 logging.error(f'Request Error Code: {status_code}')
                 connector_response.raise_for_status()
 
+
+    ### Further robustness checks
+    def __resilient_request(
+            self,
+            response: requests.models.Response,
+            ):
+        """Internal helper method - serves as generous requests
+           checker using the custom defined error and sucess code dicts
+           for general runtime robustness
+
+        Args:
+            response (requests.models.Response): generous API response
+
+        Raises:
+            Exception: _description_
+
+        """
+        status_code = response.status_code
+        response_url = response.url
+        status_code_message = [
+            dict_.get(status_code).get("message")
+            for dict_ in [self.error_codes_dict, self.success_codes_dict]
+            if status_code in dict_.keys()]
+        # If status code is not present in the defined dicts
+        if status_code_message == []:
+            logging.info(f"Status code: {status_code} not defined")
+        else: # if status code is definded in the dicts
+            # get the defined message for the status code
+            status_code_message = f"{"".join(status_code_message)} for URL: {response_url}"
+            # get the defined return (type) for the status code
+            status_code_return = [
+                dict_.get(status_code).get("return_")
+                for dict_ in [self.error_codes_dict, self.success_codes_dict]
+                if status_code in dict_.keys()]
+
+            if status_code_return is not None:
+                logging.info(status_code_message)
+            else:
+                raise Exception("Error")
 
     # Establishing the connection
     def __ecb_connect(
