@@ -1,0 +1,1 @@
+from ecb_datainfo.ecb_datainfo import ecb_data_info
