@@ -72,3 +72,21 @@ if MANUAL_TEST:
             series_key="FM.M.U2.EUR.RT.MM.EURIBOR1YD_.HSTA",
             detail="serieskeysonly")
         print(sample_data_series_only)
+        # 10. All Short Term Interest Rates available here: https://data.ecb.europa.eu/publications/financial-markets-and-interest-rates/3030673
+        # Euro-Area
+        # 1. Unsecured - overnight - short-term rate - Historical close, average of observations through period, Euro area (changing composition), Monthly
+        # Series Key: FM.M.U2.EUR.4F.MM.UONSTR.HSTA (Euro short-term rate (€STR))
+        # 2. Euribor 1-month - Historical close, average of observations through period, Euro area (changing composition), Monthly
+        # Series Key: FM.M.U2.EUR.RT.MM.EURIBOR1MD_.HSTA (1-month deposits (EURIBOR))
+        # 3. Euribor 3-month - Historical close, average of observations through period, Euro area (changing composition), Monthly
+        # Series Key: FM.M.U2.EUR.RT.MM.EURIBOR3MD_.HSTA (3-month deposits (EURIBOR))
+        # 4. Euribor 6-month - Historical close, average of observations through period, Euro area (changing composition), Monthly
+        # Series Key: FM.M.U2.EUR.RT.MM.EURIBOR6MD_.HSTA (6-month deposits (EURIBOR))
+        # 5. Euribor 12-month - Historical close, average of observations through period, Euro area (changing composition), Monthly
+        # Series Key: FM.M.U2.EUR.RT.MM.EURIBOR1YD_.HSTA (12-month deposits (EURIBOR))
+        # US-Area
+        # 1. USD Federal Reserve Secured Overnight Financing Rate SOFR - FRB - Historical close, average of observations through period, United States, Monthly
+        # Series Key: FM.M.US.USD.RT.KR.USDSOFR_.HSTA (Secured overnight financing rate (SOFR))
+        # Japan
+        # 1. MUTAN (Uncollateralized Overnight Call Rate) - Historical close, average of observations through period, Japan, Monthly
+        # Series Key: FM.M.JP.JPY.RT.MM.JPONMU_RR.HSTA (Tokyo overnight average rate (TONAR))
