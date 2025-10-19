@@ -61,9 +61,15 @@ if MANUAL_TEST:
         print(ecb_data_info_instance.search_dataflow_constraints(dataflow="FM"))
         # 9. Loading data for a series key
         start_date = "2020-01-01"
-        end_date = "2024-10-23"
+        end_date = "2025-06-01"
         sample_data = ecb_data_info_instance.get_ecb_data(
             series_key="FM.M.U2.EUR.RT.MM.EURIBOR1YD_.HSTA",
+            start_date=start_date,
+            end_date=end_date,
+            include_history=True)
+        print(sample_data)
+        sample_data = ecb_data_info_instance.get_ecb_data(
+            series_key="YC.B.U2.EUR.4F.G_N_A.SV_C_YM.SR_3M",
             start_date=start_date,
             end_date=end_date,
             include_history=True)
